@@ -10,7 +10,13 @@
 
 int button_state = 0;
 
-void core1_loop(){}
+void core1_loop(){
+    while(1){
+        gpio_put(LED_R, button_state);
+        printf("[CORE 1]: controlando LED...\n");
+        sleep_ms(30);
+    }
+}
 
 void setup(){
     stdio_init_all();
@@ -31,7 +37,8 @@ int main()
     stdio_init_all();
 
     while (true) {
-        printf("Hello, world!\n");
-        sleep_ms(1000);
+        button_state = !gpio_get(BTN_A);
+        printf("[CORE 0]: Enviando estado do botão...\n");
+        sleep_ms(30);
     }
 }
