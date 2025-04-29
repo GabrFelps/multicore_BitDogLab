@@ -24,6 +24,7 @@ void core1_loop(){
     irq_set_exclusive_handler(SIO_FIFO_IRQ_NUM(1), core1_fifo_irq);
     irq_set_enabled(SIO_FIFO_IRQ_NUM(1), true);
     while(1){
+        printf("[CORE 1]: Controlando LED...\n");
         sleep_ms(30);
     }
 }
