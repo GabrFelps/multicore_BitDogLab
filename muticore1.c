@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 
-//BIBLIOTECAS PRINCIPAIS
+// Bibliotecas principais
 #include "pico/multicore.h"
+#include "hardware/irq.h"
 
-//pinos gpio
+// Pinos GPIO
 #define LED_R 13
 #define BTN_A 5
 
-int button_state = 0;
 
 void core1_loop(){
     while(1){
@@ -35,9 +35,11 @@ void setup(){
 int main()
 {
     setup();
+    int button_read_state = 0;
 
     while (true) {
-        button_state = !gpio_get(BTN_A);
+        button_read_state = !gpio_get(BTN_A);
+        multicore_fifo_push_blocking(button_read_state);
         printf("[CORE 0]: Enviando estado do botão...\n");
         sleep_ms(30);
     }
