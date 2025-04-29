@@ -9,6 +9,14 @@
 #define LED_R 13
 #define BTN_A 5
 
+void core1_fifo_irq(){
+    while(multicore_fifo_rvalid()){
+        static uint32_t button_fifo_state;
+        button_fifo_state = multicore_fifo_pop_blocking();
+        gpio_put(LED_R, button_fifo_state);
+    }
+}
+
 // CORE 1: CONTROLAR LED
 void core1_loop(){
     multicore_fifo_clear_irq(); // limpar interrupções de FIFO interprocessador
