@@ -9,11 +9,13 @@
 #define LED_R 13
 #define BTN_A 5
 
-
+// CORE 1: CONTROLAR LED
 void core1_loop(){
+    multicore_fifo_clear_irq(); // limpar interrupções de FIFO interprocessador
+
+    irq_set_exclusive_handler(SIO_FIFO_IRQ_NUM(1), core1_fifo_irq);
+    irq_set_enabled(SIO_FIFO_IRQ_NUM(1), true);
     while(1){
-        gpio_put(LED_R, button_state);
-        printf("[CORE 1]: controlando LED...\n");
         sleep_ms(30);
     }
 }
