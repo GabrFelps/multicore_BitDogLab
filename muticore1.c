@@ -34,7 +34,7 @@ void setup(){
 }
 int main()
 {
-    stdio_init_all();
+    setup();
 
     while (true) {
         button_state = !gpio_get(BTN_A);
